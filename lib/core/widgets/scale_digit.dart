@@ -1,3 +1,4 @@
+import 'package:charts_with_slider/core/constants/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -13,10 +14,7 @@ class ScaleDigit {
 
     TextSpan textSpan = TextSpan(
       text: text,
-      style: textStyle ??const TextStyle(
-        color: Colors.black,
-        fontSize: 12,
-      ),
+      style: textStyle ?? defaultTextStyle,
     );
     final textPainter = TextPainter(
       text: textSpan,

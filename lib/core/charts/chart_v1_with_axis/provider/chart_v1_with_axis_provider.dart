@@ -1,7 +1,10 @@
 import 'dart:math';
 import 'dart:ui';
-import 'package:charts_with_slider/core/charts/chart_v1_with_axis/models/schedule_v1.dart';
+import 'package:charts_with_slider/core/charts/chart_v1_with_axis/models/foreground_options_v1.dart';
+import 'package:charts_with_slider/core/charts/chart_v1_with_axis/models/point_digit_model.dart';
+import 'package:charts_with_slider/core/constants/constants.dart';
 import 'package:charts_with_slider/core/constants/types_custom.dart';
+import 'package:charts_with_slider/core/utils/get_text_widget_size.dart';
 import 'package:charts_with_slider/dependencies/export.dart';
 
 class ChartV1WithAxisProvider extends ChangeNotifier {
@@ -13,14 +16,14 @@ class ChartV1WithAxisProvider extends ChangeNotifier {
     this.widthXYLine,
     this.verticalLineColor,
     this.verticalLineWidth,
-    this.lineXHorizontal,
-    this.lineYVertical,
+    this.foregroundOptionsV1,
+
   }) {
     state.widthCanvas = widthMain;
     state.heightCanvas = heightMain;
+    getMinusValues();
   }
-  final List<POINT_DIGIT>? lineXHorizontal;
-  final List<POINT_DIGIT>? lineYVertical;
+  final ForegroundOptionsV1? foregroundOptionsV1;
   final double widthMain;
   final double heightMain;
   final List<ScheduleV1> listLines;
@@ -30,9 +33,50 @@ class ChartV1WithAxisProvider extends ChangeNotifier {
   final double? verticalLineWidth;
   CharV1WithAxisState state = CharV1WithAxisState();
 
+  void getMinusValues() {
+    if (foregroundOptionsV1 == null ||
+        foregroundOptionsV1?.lineXHorizontal == null ||
+        foregroundOptionsV1?.lineYVertical == null) {
+      return;
+    }
+
+
+    for (POINT_DIGIT element in foregroundOptionsV1?.lineXHorizontal ?? []) {
+      Size size = GetTextWidgetSize.getTextWidgetSize(element.text,
+          foregroundOptionsV1?.textStyleXHorizontal ?? defaultTextStyle);
+      state.horizontalXHorizontalMinusValue = max(state.horizontalXHorizontalMinusValue, size.width);
+      state.listPointsXLineHorizontal.add(
+        PointDigitModel(
+          width: size.width,
+          height: size.height,
+          pointType: PointType.X,
+          position: element.value,
+          text: element.text ?? '',
+        ),
+      );
+    }
+
+    for (POINT_DIGIT element in foregroundOptionsV1?.lineYVertical ?? []) {
+      Size size = GetTextWidgetSize.getTextWidgetSize(element.text,
+          foregroundOptionsV1?.textStyleYVertical ?? defaultTextStyle);
+      state.verticalYVerticalMinusValue = max(state.verticalYVerticalMinusValue, size.height);
+      state.listPointsYLineVertical.add(
+        PointDigitModel(
+          width: size.width,
+          height: size.height,
+          pointType: PointType.Y,
+          position: element.value,
+          text: element.text ?? '',
+        ),
+      );
+    }
+    state.verticalYVerticalMinusValue = state.verticalYVerticalMinusValue+10;
+    state.horizontalXHorizontalMinusValue = state.horizontalXHorizontalMinusValue+10;
+  }
+
   Size get getSizeCanvas => Size(
-      state.widthCanvas - state.horizontalXMinusValue,
-      state.heightCanvas - state.verticalYMinusValue);
+      state.widthCanvas - state.horizontalXHorizontalMinusValue,
+      state.heightCanvas - state.verticalYVerticalMinusValue);
 
   Size get getSizeMain => Size(state.widthCanvas, state.heightCanvas);
 
@@ -78,7 +122,6 @@ class ChartV1WithAxisProvider extends ChangeNotifier {
     }
   }
 
-  /// ///////////////////
   void drawAllGraphs(Canvas canvas) {
     for (final lineGraph in listLines) {
       drawGraph(
@@ -100,9 +143,7 @@ class ChartV1WithAxisProvider extends ChangeNotifier {
   }) {
     final thumbPaint2 = Paint()
       ..color = model.colorGraph
-      ..strokeWidth = 2.0;
-
-    ///todo
+      ..strokeWidth = 2.0;///todo
     getMaxXMaxY(model.values);
     double coefX = size.width / state.maxX;
     double coefY = size.height / state.maxY;
@@ -153,7 +194,11 @@ class ChartV1WithAxisProvider extends ChangeNotifier {
 }
 
 class CharV1WithAxisState {
-  CharV1WithAxisState();
+  List <PointDigitModel> listPointsXLineHorizontal = [];
+  List <PointDigitModel> listPointsYLineVertical = [];
+  double horizontalXHorizontalMinusValue = 0;
+  double verticalYVerticalMinusValue = 0;
+
 
   double maxX = 0;
   double maxY = 0;
@@ -161,8 +206,7 @@ class CharV1WithAxisState {
   double maxPlusCoefficientX = 1;
   late double widthCanvas;
   late double heightCanvas;
-  double horizontalXMinusValue = 0;
-  double verticalYMinusValue = 0;
+
   double sliderValue = .5;
   GlobalKey keyOfField = GlobalKey(debugLabel: 'CharV1WithAxisState');
 }

@@ -1,3 +1,4 @@
+import 'package:charts_with_slider/core/charts/chart_v1_with_axis/models/foreground_options_v1.dart';
 import 'package:charts_with_slider/core/charts/chart_v1_with_axis/models/schedule_v1.dart';
 import 'package:charts_with_slider/core/constants/types_custom.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,6 @@ abstract interface class ChartsInf {
     double? widthXYLine,
     Color? verticalLineColor,
     double? verticalLineWidth,
-    List<POINT_DIGIT>? lineXHorizontal,
-    List<POINT_DIGIT>? lineYVertical,
+    ForegroundOptionsV1? foregroundOptionsV1,
   });
 }

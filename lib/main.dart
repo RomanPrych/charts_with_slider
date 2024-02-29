@@ -1,4 +1,5 @@
 import 'package:charts_with_slider/charts_widget.dart';
+import 'package:charts_with_slider/core/charts/chart_v1_with_axis/models/foreground_options_v1.dart';
 import 'package:charts_with_slider/core/charts/chart_v1_with_axis/models/schedule_v1.dart';
 import 'package:charts_with_slider/core/constants/types_custom.dart';
 import 'package:charts_with_slider/dependencies/export.dart';
@@ -140,6 +141,35 @@ class _MyHomePageState extends State<MyHomePage> {
     (x: 24, y: 19),
   ];
 
+  List<({String text, double value})>? lineXHorizontal = [
+    (value: 2, text: '02'),
+    (value: 4, text: '04'),
+    (value: 6, text: '06'),
+    (value: 8, text: '08'),
+    (value: 10, text: '10'),
+    (value: 12, text: '12'),
+    (value: 14, text: '14'),
+    (value: 16, text: '16'),
+    (value: 18, text: '18'),
+    (value: 20, text: '20'),
+    (value: 22, text: '22'),
+    (value: 24, text: '00'),
+  ];
+  List<({String text, double value})>? lineYVertical = [
+  (value: 14, text: '14'),
+  (value: 16, text: '16'),
+  (value: 18, text: '18'),
+  (value: 20, text: '20'),
+  (value: 22, text: '22'),
+  (value: 24, text: '24'),
+  (value: 26, text: '26'),
+  (value: 28, text: '28'),
+  (value: 30, text: '30'),
+  (value: 32, text: '32'),
+  (value: 34, text: '34'),
+  (value: 36, text: '36'),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -148,13 +178,17 @@ class _MyHomePageState extends State<MyHomePage> {
         title: const Text('Flutter Demo Home Page'),
       ),
       body: Container(
-        color: Colors.lightGreenAccent,
+        color: Colors.yellow,
         child: Column(
           children: [
             Text('data'),
             Container(
-              color: Colors.yellowAccent,
+              color: Colors.green.withOpacity(.2),
               child: ChartsWidget.ChartV1WithAxis(
+                foregroundOptionsV1: ForegroundOptionsV1(
+                  lineXHorizontal: lineXHorizontal,
+                  lineYVertical: lineYVertical,
+                ),
                 colorXYLine: Colors.green,
                 listLines: [
                   ScheduleV1(

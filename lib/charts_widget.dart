@@ -1,3 +1,4 @@
+import "package:charts_with_slider/core/charts/chart_v1_with_axis/models/foreground_options_v1.dart";
 import "package:charts_with_slider/core/constants/types_custom.dart";
 
 import "dependencies/export.dart";
@@ -13,8 +14,7 @@ abstract interface class ChartsWidget {
     double? widthXYLine,
     Color? verticalLineColor,
     double? verticalLineWidth,
-    List<POINT_DIGIT>? lineXHorizontal,
-    List<POINT_DIGIT>? lineYVertical,
+    ForegroundOptionsV1? foregroundOptionsV1,
   }) =>
       _source.ChartV1WithAxis(
         listLines: listLines,
@@ -24,7 +24,6 @@ abstract interface class ChartsWidget {
         widthXYLine: widthXYLine,
         verticalLineWidth: verticalLineWidth,
         verticalLineColor: verticalLineColor,
-        lineYVertical: lineYVertical,
-        lineXHorizontal: lineXHorizontal,
+        foregroundOptionsV1: foregroundOptionsV1,
       );
 }
