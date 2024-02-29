@@ -13,18 +13,29 @@ class Root extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTapDown: (details) {
-        value.changePositionVerticalLine(details.globalPosition.dx);
-      },
-      onHorizontalDragUpdate: (details) {
-        value.changePositionVerticalLine(details.globalPosition.dx);
-      },
-      child: CustomPaint(
-        key: value.state.keyOfField,
-        foregroundPainter: ChartV1BackgroundCustomPaint(value),
-        painter: ChartV1CustomPainter(value),
-        size: Size(value.state.widthFieldGiven, value.state.heightFieldGiven),
+    return SizedBox(
+      width: value.getSizeMain.width,
+      height: value.getSizeMain.height,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          GestureDetector(
+            onTapDown: (details) {
+              value.changePositionVerticalLine(details.globalPosition.dx);
+            },
+            onHorizontalDragUpdate: (details) {
+              value.changePositionVerticalLine(details.globalPosition.dx);
+            },
+            child: CustomPaint(
+              key: value.state.keyOfField,
+              foregroundPainter: ChartV1BackgroundCustomPaint(value),
+              painter: ChartV1CustomPainter(value),
+              size: value.getSizeCanvas,
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -1,3 +1,5 @@
+import "package:charts_with_slider/core/constants/types_custom.dart";
+
 import "dependencies/export.dart";
 
 abstract interface class ChartsWidget {
@@ -11,6 +13,8 @@ abstract interface class ChartsWidget {
     double? widthXYLine,
     Color? verticalLineColor,
     double? verticalLineWidth,
+    List<POINT_DIGIT>? lineXHorizontal,
+    List<POINT_DIGIT>? lineYVertical,
   }) =>
       _source.ChartV1WithAxis(
         listLines: listLines,
@@ -20,5 +24,7 @@ abstract interface class ChartsWidget {
         widthXYLine: widthXYLine,
         verticalLineWidth: verticalLineWidth,
         verticalLineColor: verticalLineColor,
+        lineYVertical: lineYVertical,
+        lineXHorizontal: lineXHorizontal,
       );
 }

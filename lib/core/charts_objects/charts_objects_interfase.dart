@@ -1,4 +1,5 @@
 import 'package:charts_with_slider/core/charts/chart_v1_with_axis/models/schedule_v1.dart';
+import 'package:charts_with_slider/core/constants/types_custom.dart';
 import 'package:flutter/material.dart';
 
 abstract interface class ChartsInf {
@@ -10,5 +11,7 @@ abstract interface class ChartsInf {
     double? widthXYLine,
     Color? verticalLineColor,
     double? verticalLineWidth,
+    List<POINT_DIGIT>? lineXHorizontal,
+    List<POINT_DIGIT>? lineYVertical,
   });
 }

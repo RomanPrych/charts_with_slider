@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:charts_with_slider/core/charts/chart_v1_with_axis/provider/chart_v1_with_axis_provider.dart';
+import 'package:charts_with_slider/core/charts/chart_v1_with_axis/widgets/chart_v1_background_custom_paint.dart';
 import 'package:charts_with_slider/core/widgets/scale_digit.dart';
 import 'package:flutter/material.dart';
 
@@ -10,9 +11,9 @@ class ChartV1CustomPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    value.drawXYLine(canvas, size);
-    value.drawVerticalLine(canvas, size);
-    value.drawAllGraphs(canvas, size);
+    value.drawXYLine(canvas);
+    value.drawVerticalLine(canvas);
+    value.drawAllGraphs(canvas);
 
     ///   /////////////////////////////////
 
@@ -24,7 +25,6 @@ class ChartV1CustomPainter extends CustomPainter {
 
 /////////////////////////////////////////////
 
-    // Draw the slider thumb
     final thumbRadius = 10.0;
     final thumbCenter =
         Offset(value.state.sliderValue * size.width, size.height + 10);

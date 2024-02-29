@@ -13,11 +13,14 @@ class ChartV1WithAxisProvider extends ChangeNotifier {
     this.widthXYLine,
     this.verticalLineColor,
     this.verticalLineWidth,
+    this.lineXHorizontal,
+    this.lineYVertical,
   }) {
-    state.widthFieldGiven = widthMain;
-    state.heightFieldGiven = heightMain;
+    state.widthCanvas = widthMain;
+    state.heightCanvas = heightMain;
   }
-
+  final List<POINT_DIGIT>? lineXHorizontal;
+  final List<POINT_DIGIT>? lineYVertical;
   final double widthMain;
   final double heightMain;
   final List<ScheduleV1> listLines;
@@ -27,39 +30,40 @@ class ChartV1WithAxisProvider extends ChangeNotifier {
   final double? verticalLineWidth;
   CharV1WithAxisState state = CharV1WithAxisState();
 
-  void drawXYLine(
-    Canvas canvas,
-    Size size,
-  ) {
+  Size get getSizeCanvas => Size(
+      state.widthCanvas - state.horizontalXMinusValue,
+      state.heightCanvas - state.verticalYMinusValue);
+
+  Size get getSizeMain => Size(state.widthCanvas, state.heightCanvas);
+
+  void drawXYLine(Canvas canvas) {
     final paint = Paint()
       ..color = colorXYLine ?? Colors.black
       ..strokeWidth = widthXYLine ?? 1;
 
-    canvas.drawLine(
-        Offset(0, size.height), Offset(size.width, size.height), paint);
-    canvas.drawLine(const Offset(0, 0), Offset(0, size.height), paint);
+    canvas.drawLine(Offset(0, getSizeCanvas.height),
+        Offset(getSizeCanvas.width, getSizeCanvas.height), paint);
+    canvas.drawLine(const Offset(0, 0), Offset(0, getSizeCanvas.height), paint);
   }
 
-  void drawVerticalLine(
-    Canvas canvas,
-    Size size,
-  ) {
+  void drawVerticalLine(Canvas canvas) {
     final linePaint = Paint()
       ..color = verticalLineColor ?? Colors.blue
       ..strokeWidth = verticalLineWidth ?? 2.0;
-    final lineStart = Offset(state.sliderValue * size.width, size.height);
-    final lineEnd = Offset(state.sliderValue * size.width, 0);
+    final lineStart =
+        Offset(state.sliderValue * getSizeCanvas.width, getSizeCanvas.height);
+    final lineEnd = Offset(state.sliderValue * getSizeCanvas.width, 0);
     canvas.drawLine(lineStart, lineEnd, linePaint);
   }
 
   void changePositionVerticalLine(double value) {
     try {
       RenderBox? ren =
-      state.keyOfField.currentContext?.findRenderObject() as RenderBox;
+          state.keyOfField.currentContext?.findRenderObject() as RenderBox;
       Offset offsetFirst = ren.localToGlobal(Offset.zero);
       double startPosition = offsetFirst.dx;
       double delta = value - startPosition;
-      double calcPositionSliderValue = delta / state.widthFieldGiven;
+      double calcPositionSliderValue = delta / state.widthCanvas;
       state.sliderValue = max(0, min(calcPositionSliderValue, 1));
       notifyListeners();
     } catch (e) {
@@ -75,26 +79,30 @@ class ChartV1WithAxisProvider extends ChangeNotifier {
   }
 
   /// ///////////////////
-  void drawAllGraphs(
-    Canvas canvas,
-    Size size,
-  ) {
+  void drawAllGraphs(Canvas canvas) {
     for (final lineGraph in listLines) {
       drawGraph(
         canvas: canvas,
-        size: size,
+        size: getSizeCanvas,
         model: lineGraph,
       );
-      drawPointOnGraph(canvas: canvas, size: size, model: lineGraph);
+    }
+    //need to do not display under lines
+    for (final lineGraph in listLines) {
+      drawPointOnGraph(canvas: canvas, size: getSizeCanvas, model: lineGraph);
     }
   }
 
-  void drawPointOnGraph({required Canvas canvas,
-    required Size size,required ScheduleV1 model,}
-      ){
+  void drawPointOnGraph({
+    required Canvas canvas,
+    required Size size,
+    required ScheduleV1 model,
+  }) {
     final thumbPaint2 = Paint()
       ..color = model.colorGraph
-      ..strokeWidth = 2.0;///todo
+      ..strokeWidth = 2.0;
+
+    ///todo
     getMaxXMaxY(model.values);
     double coefX = size.width / state.maxX;
     double coefY = size.height / state.maxY;
@@ -127,8 +135,6 @@ class ChartV1WithAxisProvider extends ChangeNotifier {
     canvas.drawPoints(PointMode.polygon, listOf, paint);
   }
 
-
-
   double getYValueAtGraph(double x, List<Offset> points) {
     for (int i = 0; i < points.length - 1; i++) {
       if (points[i].dx <= x && points[i + 1].dx >= x) {
@@ -153,10 +159,10 @@ class CharV1WithAxisState {
   double maxY = 0;
   double maxPlusCoefficientY = 1.25;
   double maxPlusCoefficientX = 1;
-  late double widthFieldGiven;
-  late double heightFieldGiven;
-  double? widthForegroundGiven;
-  double? heightForegroundGiven;
+  late double widthCanvas;
+  late double heightCanvas;
+  double horizontalXMinusValue = 0;
+  double verticalYMinusValue = 0;
   double sliderValue = .5;
   GlobalKey keyOfField = GlobalKey(debugLabel: 'CharV1WithAxisState');
 }

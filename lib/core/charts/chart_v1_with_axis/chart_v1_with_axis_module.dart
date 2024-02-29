@@ -1,5 +1,6 @@
 import 'package:charts_with_slider/core/charts/chart_v1_with_axis/chart_v1_with_axis_screen.dart';
 import 'package:charts_with_slider/core/charts/chart_v1_with_axis/provider/chart_v1_with_axis_provider.dart';
+import 'package:charts_with_slider/core/constants/types_custom.dart';
 import 'package:charts_with_slider/dependencies/export.dart';
 import 'package:provider/provider.dart';
 
@@ -13,6 +14,8 @@ class ChartV1WithAxisModule extends StatelessWidget {
     this.widthXYLine,
     this.verticalLineColor,
     this.verticalLineWidth,
+    this.lineXHorizontal,
+    this.lineYVertical,
   });
 
   final List<ScheduleV1> listLines;
@@ -22,6 +25,8 @@ class ChartV1WithAxisModule extends StatelessWidget {
   final double? widthXYLine;
   final Color? verticalLineColor;
   final double? verticalLineWidth;
+  final List<POINT_DIGIT>? lineXHorizontal;
+  final List<POINT_DIGIT>? lineYVertical;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +39,8 @@ class ChartV1WithAxisModule extends StatelessWidget {
         widthXYLine: widthXYLine,
         verticalLineColor: verticalLineColor,
         verticalLineWidth: verticalLineWidth,
+        lineXHorizontal: lineXHorizontal,
+        lineYVertical: lineYVertical,
       ),
       child: const ChartV1WithAxisScreen(),
     );

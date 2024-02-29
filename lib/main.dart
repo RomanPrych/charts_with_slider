@@ -139,7 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
     (x: 23, y: 21),
     (x: 24, y: 19),
   ];
-///fhghfghfghfg
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -147,28 +147,40 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Flutter Demo Home Page'),
       ),
-      body: ChartsWidget.ChartV1WithAxis(
-        colorXYLine: Colors.green,
-        listLines: [
-          ScheduleV1(
-            values: line,
-            colorGraph: Colors.indigo,
-          ),
-          ScheduleV1(
-            values: line2,
-            colorGraph: Colors.red,
-          ),
-          ScheduleV1(
-            values: line3,
-            colorGraph: Colors.green,
-          ),
-          ScheduleV1(
-            values: line4,
-            colorGraph: Colors.blueAccent,
-          ),
-        ],
-        width: 500,
-        height: 500,
+      body: Container(
+        color: Colors.lightGreenAccent,
+        child: Column(
+          children: [
+            Text('data'),
+            Container(
+              color: Colors.yellowAccent,
+              child: ChartsWidget.ChartV1WithAxis(
+                colorXYLine: Colors.green,
+                listLines: [
+                  ScheduleV1(
+                    values: line,
+                    colorGraph: Colors.indigo,
+                  ),
+                  ScheduleV1(
+                    values: line2,
+                    colorGraph: Colors.red,
+                  ),
+                  ScheduleV1(
+                    values: line3,
+                    colorGraph: Colors.green,
+                  ),
+                  ScheduleV1(
+                    values: line4,
+                    colorGraph: Colors.blueAccent,
+                  ),
+                ],
+                width: 500,
+                height: 500,
+              ),
+            ),
+            Text('data'),
+          ],
+        ),
       ),
     );
   }
