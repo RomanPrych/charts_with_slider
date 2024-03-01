@@ -5,6 +5,7 @@ import 'package:charts_with_slider/core/charts/chart_v1_with_axis/models/point_d
 import 'package:charts_with_slider/core/constants/constants.dart';
 import 'package:charts_with_slider/core/constants/types_custom.dart';
 import 'package:charts_with_slider/core/utils/get_text_widget_size.dart';
+import 'package:charts_with_slider/core/widgets/scale_digit.dart';
 import 'package:charts_with_slider/dependencies/export.dart';
 
 class ChartV1WithAxisProvider extends ChangeNotifier {
@@ -72,6 +73,55 @@ class ChartV1WithAxisProvider extends ChangeNotifier {
     }
     state.verticalYVerticalMinusValue = state.verticalYVerticalMinusValue+10;
     state.horizontalXHorizontalMinusValue = state.horizontalXHorizontalMinusValue+10;
+  }
+
+  void drawScalesDigits(Canvas canvas){
+
+
+
+    double coefX = getSizeCanvas.width / state.maxX;
+    for(PointDigitModel elementX in state.listPointsXLineHorizontal){
+      double horizontalCoef = 0;
+      if(foregroundOptionsV1?.textPositionNearLineHorizontal == TextPositionNearLineHorizontal.center || foregroundOptionsV1?.textPositionNearLineHorizontal == null){
+        horizontalCoef = (elementX.width/2);
+        print(horizontalCoef);
+      } else if (foregroundOptionsV1?.textPositionNearLineHorizontal == TextPositionNearLineHorizontal.right){
+        horizontalCoef = 0;
+      } else {
+        horizontalCoef = elementX.width;
+      }
+
+      ScaleDigit.addAxisDigit(
+        text: elementX.text,
+        size: getSizeCanvas,
+        canvas: canvas,
+        x: (elementX.position*coefX) - horizontalCoef,
+        y: getSizeCanvas.height,
+      );
+    }
+///
+
+    double coefY = getSizeCanvas.height / state.maxY;
+    for(PointDigitModel elementX in state.listPointsYLineVertical){
+      double verticalCoef = 0;
+      if(foregroundOptionsV1?.textPositionNearLineVertical == TextPositionNearLineVertical.center || foregroundOptionsV1?.textPositionNearLineVertical == null){
+        verticalCoef = (elementX.height/2);
+      } else if (foregroundOptionsV1?.textPositionNearLineVertical == TextPositionNearLineVertical.over){
+        verticalCoef = elementX.height;
+      } else {
+        verticalCoef = 0;
+      }
+
+      ScaleDigit.addAxisDigit(
+        text: elementX.text,
+        size: getSizeCanvas,
+        canvas: canvas,
+        x: -(elementX.width+3),
+        y: -((elementX.position * coefY) - getSizeCanvas.height)-verticalCoef,
+      );
+    }
+
+
   }
 
   Size get getSizeCanvas => Size(

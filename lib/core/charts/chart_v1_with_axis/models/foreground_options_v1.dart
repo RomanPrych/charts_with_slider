@@ -8,14 +8,17 @@ class ForegroundOptionsV1 {
     this.textStyleYVertical,
     this.lineXHorizontal,
     this.lineYVertical,
-    this.textPositionNearLine,
+    this.textPositionNearLineVertical,
+    this.textPositionNearLineHorizontal,
   });
 
   final List<POINT_DIGIT>? lineXHorizontal;
   final List<POINT_DIGIT>? lineYVertical;
   final TextStyle? textStyleXHorizontal;
   final TextStyle? textStyleYVertical;
-  final TextPositionNearLine? textPositionNearLine;
+  final TextPositionNearLineVertical? textPositionNearLineVertical;
+  final TextPositionNearLineHorizontal? textPositionNearLineHorizontal;
 }
 
-enum TextPositionNearLine { under, over, center }
+enum TextPositionNearLineHorizontal { left, right, center }
+enum TextPositionNearLineVertical { under, over, center }

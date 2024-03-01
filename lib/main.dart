@@ -75,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
     (x: 13, y: 23),
     (x: 14, y: 34),
     (x: 15, y: 35),
-    (x: 15.5, y: 36),
+    (x: 15.5, y: 33),
     (x: 16, y: 35),
     (x: 17, y: 30),
     (x: 18, y: 31),
@@ -156,6 +156,13 @@ class _MyHomePageState extends State<MyHomePage> {
     (value: 24, text: '00'),
   ];
   List<({String text, double value})>? lineYVertical = [
+  (value: 0, text: '0'),
+  (value: 2, text: '2'),
+  (value: 4, text: '4'),
+  (value: 6, text: '6'),
+  (value: 8, text: '8'),
+  (value: 10, text: '10'),
+  (value: 12, text: '12'),
   (value: 14, text: '14'),
   (value: 16, text: '16'),
   (value: 18, text: '18'),
