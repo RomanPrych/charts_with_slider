@@ -142,17 +142,29 @@ class _MyHomePageState extends State<MyHomePage> {
   ];
 
   List<({String text, double value})>? lineXHorizontal = [
+    (value: 1, text: ''),
     (value: 2, text: '02'),
+    (value: 3, text: ''),
     (value: 4, text: '04'),
+    (value: 5, text: ''),
     (value: 6, text: '06'),
+    (value: 7, text: ''),
     (value: 8, text: '08'),
+    (value: 9, text: ''),
     (value: 10, text: '10'),
+    (value: 11, text: ''),
     (value: 12, text: '12'),
+    (value: 13, text: ''),
     (value: 14, text: '14'),
+    (value: 15, text: ''),
     (value: 16, text: '16'),
+    (value: 17, text: ''),
     (value: 18, text: '18'),
+    (value: 19, text: ''),
     (value: 20, text: '20'),
+    (value: 21, text: ''),
     (value: 22, text: '22'),
+    (value: 23, text: ''),
     (value: 24, text: '00'),
   ];
   List<({String text, double value})>? lineYVertical = [

@@ -13,6 +13,8 @@ class ChartV1CustomPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     value.drawXYLine(canvas);
     value.drawVerticalLine(canvas);
+    value.drawBackgroundLinesVertical(canvas);
+
     value.drawAllGraphs(canvas);
 
     ///   /////////////////////////////////

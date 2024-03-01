@@ -76,15 +76,11 @@ class ChartV1WithAxisProvider extends ChangeNotifier {
   }
 
   void drawScalesDigits(Canvas canvas){
-
-
-
     double coefX = getSizeCanvas.width / state.maxX;
     for(PointDigitModel elementX in state.listPointsXLineHorizontal){
       double horizontalCoef = 0;
       if(foregroundOptionsV1?.textPositionNearLineHorizontal == TextPositionNearLineHorizontal.center || foregroundOptionsV1?.textPositionNearLineHorizontal == null){
         horizontalCoef = (elementX.width/2);
-        print(horizontalCoef);
       } else if (foregroundOptionsV1?.textPositionNearLineHorizontal == TextPositionNearLineHorizontal.right){
         horizontalCoef = 0;
       } else {
@@ -99,7 +95,6 @@ class ChartV1WithAxisProvider extends ChangeNotifier {
         y: getSizeCanvas.height,
       );
     }
-///
 
     double coefY = getSizeCanvas.height / state.maxY;
     for(PointDigitModel elementX in state.listPointsYLineVertical){
@@ -120,8 +115,68 @@ class ChartV1WithAxisProvider extends ChangeNotifier {
         y: -((elementX.position * coefY) - getSizeCanvas.height)-verticalCoef,
       );
     }
+  }
+
+  void drawBackgroundLinesVertical(Canvas canvas){
+    double coefX = getSizeCanvas.width / state.maxX;
+    for(PointDigitModel elementX in state.listPointsXLineHorizontal){
+      final paint = Paint()
+        ..color =  Colors.grey
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = widthXYLine ?? 1;
+      double horizontalCoef = 0;
+      if(foregroundOptionsV1?.textPositionNearLineHorizontal == TextPositionNearLineHorizontal.center || foregroundOptionsV1?.textPositionNearLineHorizontal == null){
+        horizontalCoef = 0;
+      } else if (foregroundOptionsV1?.textPositionNearLineHorizontal == TextPositionNearLineHorizontal.right){
+        horizontalCoef = -elementX.width/2;
+      } else {
+        horizontalCoef = elementX.width/2;
+      }
+      drawDashedLine(
+          canvas: canvas,
+          p1: Offset((elementX.position*coefX) - horizontalCoef, getSizeCanvas.height),
+          p2: Offset((elementX.position*coefX)- horizontalCoef, 0),
+          dashWidth: 6,
+          dashSpace: 4,
+          paint: paint,
+      );
+    }
+  }
 
 
+
+  void drawDashedLine(
+      {required Canvas canvas,
+        required Offset p1,
+        required Offset p2,
+        required int dashWidth,
+        required int dashSpace,
+        required Paint paint}) {
+    // Get normalized distance vector from p1 to p2
+
+    try{
+      var dx = p2.dx - p1.dx;
+      var dy = p2.dy - p1.dy;
+      double magnitude = sqrt(dx * dx + dy * dy);
+      dx = dx / magnitude;
+      dy = dy / magnitude;
+
+      // Compute number of dash segments
+
+      int steps = magnitude ~/ (dashWidth + dashSpace);
+      var startX = p1.dx;
+      var startY = p1.dy;
+
+      for (int i = 0; i < steps; i++) {
+        final endX = startX + dx * dashWidth;
+        final endY = startY + dy * dashWidth;
+        canvas.drawLine(Offset(startX, startY), Offset(endX, endY), paint);
+        startX += dx * (dashWidth + dashSpace);
+        startY += dy * (dashWidth + dashSpace);
+      }
+    } catch (e){
+      print('ERROR drawDashedLine =$e');
+    }
   }
 
   Size get getSizeCanvas => Size(
@@ -218,6 +273,7 @@ class ChartV1WithAxisProvider extends ChangeNotifier {
     double coefY = size.height / state.maxY;
     final paint = Paint()
       ..color = model.colorGraph
+      ..strokeCap = StrokeCap.round //round corners
       ..strokeWidth = model.widthGraph ?? 2;
 
     List<Offset> listOf = model.values
