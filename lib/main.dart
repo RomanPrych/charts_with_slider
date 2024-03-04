@@ -187,6 +187,10 @@ class _MyHomePageState extends State<MyHomePage> {
   (value: 32, text: '32'),
   (value: 34, text: '34'),
   (value: 36, text: '36'),
+  (value: 38, text: ''),
+  (value: 40, text: ''),
+  (value: 42, text: ''),
+  (value: 44, text: ''),
   ];
 
   @override
@@ -207,6 +211,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 foregroundOptionsV1: ForegroundOptionsV1(
                   lineXHorizontal: lineXHorizontal,
                   lineYVertical: lineYVertical,
+                  //textPositionNearLineVertical: TextPositionNearLineVertical.over,
+                 // textPositionNearLineHorizontal: TextPositionNearLineHorizontal.center
                 ),
                 colorXYLine: Colors.green,
                 listLines: [

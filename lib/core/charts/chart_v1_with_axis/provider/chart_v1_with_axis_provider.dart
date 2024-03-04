@@ -124,18 +124,10 @@ class ChartV1WithAxisProvider extends ChangeNotifier {
         ..color =  Colors.grey
         ..style = PaintingStyle.stroke
         ..strokeWidth = widthXYLine ?? 1;
-      double horizontalCoef = 0;
-      if(foregroundOptionsV1?.textPositionNearLineHorizontal == TextPositionNearLineHorizontal.center || foregroundOptionsV1?.textPositionNearLineHorizontal == null){
-        horizontalCoef = 0;
-      } else if (foregroundOptionsV1?.textPositionNearLineHorizontal == TextPositionNearLineHorizontal.right){
-        horizontalCoef = -elementX.width/2;
-      } else {
-        horizontalCoef = elementX.width/2;
-      }
-      drawDashedLine(
+         drawDashedLine(
           canvas: canvas,
-          p1: Offset((elementX.position*coefX) - horizontalCoef, getSizeCanvas.height),
-          p2: Offset((elementX.position*coefX)- horizontalCoef, 0),
+          p1: Offset((elementX.position*coefX), getSizeCanvas.height),
+          p2: Offset((elementX.position*coefX), 0),
           dashWidth: 6,
           dashSpace: 4,
           paint: paint,
@@ -143,7 +135,33 @@ class ChartV1WithAxisProvider extends ChangeNotifier {
     }
   }
 
+  void refresh(){
+    try{
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        notifyListeners();
+      });
+    } catch (e){
+      print('ERROR refresh = $e');
+    }
+  }
 
+  void drawBackgroundLinesHorizontal(Canvas canvas){
+    double coefY = getSizeCanvas.height / state.maxY;
+    for(PointDigitModel elementY in state.listPointsYLineVertical){
+      final paint = Paint()
+        ..color =  Colors.grey
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = widthXYLine ?? 1;
+      drawDashedLine(
+        canvas: canvas,
+        p1: Offset(0, (getSizeCanvas.height-(elementY.position*coefY))),
+        p2: Offset(getSizeCanvas.width, (getSizeCanvas.height-(elementY.position*coefY))),
+        dashWidth: 6,
+        dashSpace: 4,
+        paint: paint,
+      );
+    }
+  }
 
   void drawDashedLine(
       {required Canvas canvas,
@@ -214,7 +232,7 @@ class ChartV1WithAxisProvider extends ChangeNotifier {
       double delta = value - startPosition;
       double calcPositionSliderValue = delta / state.widthCanvas;
       state.sliderValue = max(0, min(calcPositionSliderValue, 1));
-      notifyListeners();
+      refresh();
     } catch (e) {
       print('ERROR CharV1WithAxisProvider =$e ');
     }
@@ -306,8 +324,8 @@ class CharV1WithAxisState {
   double verticalYVerticalMinusValue = 0;
 
 
-  double maxX = 0;
-  double maxY = 0;
+  double maxX = 1;
+  double maxY = 1;
   double maxPlusCoefficientY = 1.25;
   double maxPlusCoefficientX = 1;
   late double widthCanvas;

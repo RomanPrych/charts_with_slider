@@ -14,6 +14,7 @@ class ChartV1CustomPainter extends CustomPainter {
     value.drawXYLine(canvas);
     value.drawVerticalLine(canvas);
     value.drawBackgroundLinesVertical(canvas);
+    value.drawBackgroundLinesHorizontal(canvas);
 
     value.drawAllGraphs(canvas);
 
@@ -48,6 +49,7 @@ class ChartV1CustomPainter extends CustomPainter {
     //     y: value.getYValueAtX(value.state.sliderValue * size.width, listOf),
     //     text:
     //         'x = ${value.state.sliderValue * maxX} \ny= ${size.height - value.getYValueAtX(value.state.sliderValue * size.width, listOf)}');
+    value.refresh();
   }
 
   @override
