@@ -73,6 +73,7 @@ class ChartV1WithAxisProvider extends ChangeNotifier {
     }
     state.verticalYVerticalMinusValue = state.verticalYVerticalMinusValue+10;
     state.horizontalXHorizontalMinusValue = state.horizontalXHorizontalMinusValue+10;
+    refresh();
   }
 
   void drawScalesDigits(Canvas canvas){
@@ -232,7 +233,7 @@ class ChartV1WithAxisProvider extends ChangeNotifier {
       double delta = value - startPosition;
       double calcPositionSliderValue = delta / state.widthCanvas;
       state.sliderValue = max(0, min(calcPositionSliderValue, 1));
-      refresh();
+    notifyListeners();
     } catch (e) {
       print('ERROR CharV1WithAxisProvider =$e ');
     }

@@ -49,7 +49,7 @@ class ChartV1CustomPainter extends CustomPainter {
     //     y: value.getYValueAtX(value.state.sliderValue * size.width, listOf),
     //     text:
     //         'x = ${value.state.sliderValue * maxX} \ny= ${size.height - value.getYValueAtX(value.state.sliderValue * size.width, listOf)}');
-    value.refresh();
+  print('1111111');
   }
 
   @override

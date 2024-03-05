@@ -9,7 +9,7 @@ class ChartV1BackgroundCustomPaint extends CustomPainter {
   void paint(Canvas canvas, Size size) {
 
     value.drawScalesDigits(canvas);
-
+    print('222222');
 
 
   }
