@@ -325,8 +325,10 @@ class CharV1WithAxisState {
   double verticalYVerticalMinusValue = 0;
 
 
-  double maxX = 1;
-  double maxY = 1;
+  double maxX = 24;
+  double maxY = 70;
+  double minX = 0;
+  double minY = 0;
   double maxPlusCoefficientY = 1.25;
   double maxPlusCoefficientX = 1;
   late double widthCanvas;

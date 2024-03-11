@@ -202,43 +202,45 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Container(
         color: Colors.yellow,
-        child: Column(
-          children: [
-            Text('data'),
-            Container(
-              color: Colors.green.withOpacity(.2),
-              child: ChartsWidget.ChartV1WithAxis(
-                foregroundOptionsV1: ForegroundOptionsV1(
-                  lineXHorizontal: lineXHorizontal,
-                  lineYVertical: lineYVertical,
-                  //textPositionNearLineVertical: TextPositionNearLineVertical.over,
-                 // textPositionNearLineHorizontal: TextPositionNearLineHorizontal.center
+        child: Center(
+          child: Column(
+            children: [
+              Text('data'),
+              Container(
+                color: Colors.green.withOpacity(.2),
+                child: ChartsWidget.ChartV1WithAxis(
+                  foregroundOptionsV1: ForegroundOptionsV1(
+                    lineXHorizontal: lineXHorizontal,
+                    lineYVertical: lineYVertical,
+                    //textPositionNearLineVertical: TextPositionNearLineVertical.over,
+                   // textPositionNearLineHorizontal: TextPositionNearLineHorizontal.center
+                  ),
+                  colorXYLine: Colors.green,
+                  listLines: [
+                    ScheduleV1(
+                      values: line,
+                      colorGraph: Colors.indigo,
+                    ),
+                    ScheduleV1(
+                      values: line2,
+                      colorGraph: Colors.red,
+                    ),
+                    ScheduleV1(
+                      values: line3,
+                      colorGraph: Colors.green,
+                    ),
+                    ScheduleV1(
+                      values: line4,
+                      colorGraph: Colors.blueAccent,
+                    ),
+                  ],
+                  width: 500,
+                  height: 500,
                 ),
-                colorXYLine: Colors.green,
-                listLines: [
-                  ScheduleV1(
-                    values: line,
-                    colorGraph: Colors.indigo,
-                  ),
-                  ScheduleV1(
-                    values: line2,
-                    colorGraph: Colors.red,
-                  ),
-                  ScheduleV1(
-                    values: line3,
-                    colorGraph: Colors.green,
-                  ),
-                  ScheduleV1(
-                    values: line4,
-                    colorGraph: Colors.blueAccent,
-                  ),
-                ],
-                width: 500,
-                height: 500,
               ),
-            ),
-            Text('data'),
-          ],
+              Text('data'),
+            ],
+          ),
         ),
       ),
     );
