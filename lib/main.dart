@@ -78,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
     (x: 15.5, y: 33),
     (x: 16, y: 35),
     (x: 17, y: 30),
-    (x: 18, y: 31),
+    (x: 18, y: 30),
     (x: 19, y: 25),
     (x: 20, y: 23),
     (x: 21, y: 17),
@@ -187,10 +187,7 @@ class _MyHomePageState extends State<MyHomePage> {
   (value: 32, text: '32'),
   (value: 34, text: '34'),
   (value: 36, text: '36'),
-  (value: 38, text: ''),
-  (value: 40, text: ''),
-  (value: 42, text: ''),
-  (value: 44, text: ''),
+
   ];
 
   @override
@@ -203,43 +200,37 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Container(
         color: Colors.yellow,
         child: Center(
-          child: Column(
-            children: [
-              Text('data'),
-              Container(
-                color: Colors.green.withOpacity(.2),
-                child: ChartsWidget.ChartV1WithAxis(
-                  foregroundOptionsV1: ForegroundOptionsV1(
-                    lineXHorizontal: lineXHorizontal,
-                    lineYVertical: lineYVertical,
-                    //textPositionNearLineVertical: TextPositionNearLineVertical.over,
-                   // textPositionNearLineHorizontal: TextPositionNearLineHorizontal.center
-                  ),
-                  colorXYLine: Colors.green,
-                  listLines: [
-                    ScheduleV1(
-                      values: line,
-                      colorGraph: Colors.indigo,
-                    ),
-                    ScheduleV1(
-                      values: line2,
-                      colorGraph: Colors.red,
-                    ),
-                    ScheduleV1(
-                      values: line3,
-                      colorGraph: Colors.green,
-                    ),
-                    ScheduleV1(
-                      values: line4,
-                      colorGraph: Colors.blueAccent,
-                    ),
-                  ],
-                  width: 500,
-                  height: 500,
-                ),
+          child: Container(
+            color: Colors.green.withOpacity(.2),
+            child: ChartsWidget.ChartV1WithAxis(
+              foregroundOptionsV1: ForegroundOptionsV1(
+                lineXHorizontal: lineXHorizontal,
+                lineYVertical: lineYVertical,
+                //textPositionNearLineVertical: TextPositionNearLineVertical.over,
+                //textPositionNearLineHorizontal: TextPositionNearLineHorizontal.left
               ),
-              Text('data'),
-            ],
+              colorXYLine: Colors.green,
+              listLines: [
+                ScheduleV1(
+                  values: line,
+                  colorGraph: Colors.indigo,
+                ),
+                ScheduleV1(
+                  values: line2,
+                  colorGraph: Colors.red,
+                ),
+                ScheduleV1(
+                  values: line3,
+                  colorGraph: Colors.green,
+                ),
+                ScheduleV1(
+                  values: line4,
+                  colorGraph: Colors.blueAccent,
+                ),
+              ],
+              width: 500,
+              height: 500,
+            ),
           ),
         ),
       ),

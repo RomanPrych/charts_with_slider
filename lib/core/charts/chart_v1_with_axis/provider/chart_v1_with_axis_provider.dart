@@ -268,12 +268,16 @@ class ChartV1WithAxisProvider extends ChangeNotifier {
     final thumbPaint2 = Paint()
       ..color = model.colorGraph
       ..strokeWidth = 2.0;///todo
-    getMaxXMaxY(model.values);
-    double coefX = size.width / state.maxX;
-    double coefY = size.height / state.maxY;
-    List<Offset> listOf = model.values
-        .map((e) => Offset((e.x * coefX), -((e.y * coefY) - size.height)))
-        .toList();
+    //getMaxXMaxY(model.values);
+    double coefX = size.width / (state.maxX-state.minX);
+    double coefY = size.height / (state.maxY-state.minY);
+    List<Offset> listOf = [];
+    for (POINT e in model.values) {
+      listOf.add(Offset(
+        (e.x * coefX) - (coefX * state.minX),
+        -((e.y * coefY)  - (state.minY * coefY)- size.height),
+      ));
+    }
 
     canvas.drawCircle(
         Offset(state.sliderValue * size.width,
@@ -287,18 +291,21 @@ class ChartV1WithAxisProvider extends ChangeNotifier {
     required Size size,
     required ScheduleV1 model,
   }) {
-    getMaxXMaxY(model.values);
-    double coefX = size.width / state.maxX;
-    double coefY = size.height / state.maxY;
+    //getMaxXMaxY(model.values);
+    double coefX = size.width / (state.maxX-state.minX);
+    double coefY = size.height / (state.maxY-state.minY);
     final paint = Paint()
       ..color = model.colorGraph
       ..strokeCap = StrokeCap.round //round corners
       ..strokeWidth = model.widthGraph ?? 2;
     List<Offset> listOf = [];
-    for (POINT e in model.values){
-      listOf.add(Offset((e.x * coefX), -((e.y * coefY) - size.height)));
+    for (POINT e in model.values) {
+      ///listOf.add(Offset((e.x * coefX), -((e.y * coefY) - size.height)));
+      listOf.add(Offset(
+        (e.x * coefX) - (coefX * state.minX),
+        -((e.y * coefY)  - (state.minY * coefY)- size.height),
+      ));
     }
-
 
     canvas.drawPoints(PointMode.polygon, listOf, paint);
   }
@@ -328,7 +335,7 @@ class CharV1WithAxisState {
 
 
   double maxX = 24;
-  double maxY = 70;
+  double maxY = 36;
   double minX = 0;
   double minY = 0;
   double maxPlusCoefficientY = 1.25;
