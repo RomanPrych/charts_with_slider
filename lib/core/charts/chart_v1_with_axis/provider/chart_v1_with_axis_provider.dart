@@ -294,10 +294,12 @@ class ChartV1WithAxisProvider extends ChangeNotifier {
       ..color = model.colorGraph
       ..strokeCap = StrokeCap.round //round corners
       ..strokeWidth = model.widthGraph ?? 2;
+    List<Offset> listOf = [];
+    for (POINT e in model.values){
+      listOf.add(Offset((e.x * coefX), -((e.y * coefY) - size.height)));
+    }
 
-    List<Offset> listOf = model.values
-        .map((e) => Offset((e.x * coefX), -((e.y * coefY) - size.height)))
-        .toList();
+
     canvas.drawPoints(PointMode.polygon, listOf, paint);
   }
 
